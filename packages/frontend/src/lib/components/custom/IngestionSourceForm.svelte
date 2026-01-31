@@ -224,6 +224,18 @@
 			>
 			<Input id="tenantId" bind:value={formData.providerConfig.tenantId} class="col-span-3" />
 		</div>
+		<div class="grid grid-cols-4 items-center gap-4">
+			<Label for="singleUserEmail" class="text-left"
+				>{$t('app.components.ingestion_source_form.single_user_email')}</Label
+			>
+			<Input
+				id="singleUserEmail"
+				type="email"
+				placeholder={$t('app.components.ingestion_source_form.single_user_email_placeholder')}
+				bind:value={formData.providerConfig.singleUserEmail}
+				class="col-span-3"
+			/>
+		</div>
 	{:else if formData.provider === 'generic_imap'}
 		<div class="grid grid-cols-4 items-center gap-4">
 			<Label for="host" class="text-left"

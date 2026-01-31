@@ -29,7 +29,8 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 # Copy the rest of the source code
 COPY . .
 
-# Build the OSS packages.
+# Build the OSS packages with increased memory
+ENV NODE_OPTIONS="--max-old-space-size=4096"
 RUN pnpm build:oss
 
 # 2. Production Stage: Install only production dependencies and copy built artifacts

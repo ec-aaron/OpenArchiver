@@ -222,6 +222,8 @@
 				"client_secret": "Client Secret Value",
 				"client_secret_placeholder": "Enter the secret Value, not the Secret ID",
 				"tenant_id": "Directory (Tenant) ID",
+				"single_user_email": "User Email (Optional)",
+				"single_user_email_placeholder": "Required for single-user mode - e.g., user@example.com",
 				"host": "Host",
 				"port": "Port",
 				"username": "Username",

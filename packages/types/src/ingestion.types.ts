@@ -68,6 +68,12 @@ export interface Microsoft365Credentials extends BaseIngestionCredentials {
 	clientId: string;
 	clientSecret: string;
 	tenantId: string;
+	/**
+	 * Optional: Email address for single-user mode.
+	 * Required when using Application Access Policies that restrict to a specific mailbox.
+	 * Leave empty for organization-wide access.
+	 */
+	singleUserEmail?: string;
 }
 
 export interface PSTImportCredentials extends BaseIngestionCredentials {
