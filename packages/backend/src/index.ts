@@ -1,8 +1,10 @@
-export { createServer, ArchiverModule } from './api/server';
+export { createServer, ArchiverModule, loadedPlugins } from './api/server';
+export type { PluginOrModule } from './api/server';
 export { logger } from './config/logger';
 export { config } from './config';
 export * from './services/AuthService';
 export * from './services/AuditService';
+export * from './services/StorageService';
 export * from './api/middleware/requireAuth';
 export * from './api/middleware/requirePermission';
 export { db } from './database';

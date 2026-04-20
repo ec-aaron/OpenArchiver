@@ -9,6 +9,7 @@
 	},
 	"dependencies": {
 		"@open-archiver/backend": "workspace:*",
+		"@open-archiver/plugin-file-preview": "workspace:*",
 		"dotenv": "^17.2.0"
 	},
 	"devDependencies": {
