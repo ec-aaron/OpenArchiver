@@ -13,7 +13,6 @@
  *
  * Requires DATABASE_URL and storage config in .env
  */
-import 'dotenv/config';
 import { db } from '../database';
 import { attachments } from '../database/schema';
 import { StorageService } from '../services/StorageService';
