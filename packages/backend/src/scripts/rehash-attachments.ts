@@ -6,17 +6,17 @@
  * the DB's content_hash_sha256 to match.
  *
  * Usage:
- *   npx ts-node packages/backend/scripts/rehash-attachments.ts
+ *   npx ts-node packages/backend/src/scripts/rehash-attachments.ts
  *
  * Or from Docker:
- *   docker exec -it open-archiver npx ts-node packages/backend/scripts/rehash-attachments.ts
+ *   docker exec -it open-archiver node packages/backend/dist/scripts/rehash-attachments.js
  *
  * Requires DATABASE_URL and storage config in .env
  */
 import 'dotenv/config';
-import { db } from '../src/database';
-import { attachments } from '../src/database/schema';
-import { StorageService } from '../src/services/StorageService';
+import { db } from '../database';
+import { attachments } from '../database/schema';
+import { StorageService } from '../services/StorageService';
 import { createHash } from 'crypto';
 import { eq } from 'drizzle-orm';
 

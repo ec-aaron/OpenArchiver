@@ -23,7 +23,7 @@
 		"db:push": "drizzle-kit push --config=drizzle.config.ts",
 		"db:migrate": "node dist/database/migrate.js",
 		"db:migrate:dev": "ts-node-dev src/database/migrate.ts",
-		"rehash-attachments": "ts-node-dev --respawn=false scripts/rehash-attachments.ts"
+		"rehash-attachments": "ts-node-dev --respawn=false src/scripts/rehash-attachments.ts"
 	},
 	"dependencies": {
 		"@aws-sdk/client-s3": "^3.844.0",
