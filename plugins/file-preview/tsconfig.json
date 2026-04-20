@@ -1,0 +1,15 @@
+{
+	"extends": "../../tsconfig.base.json",
+	"compilerOptions": {
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"declaration": true,
+		"paths": {
+			"@open-archiver/types": ["../../packages/types/dist/index.d.ts"],
+			"@open-archiver/backend": ["../../packages/backend/dist/index.d.ts"],
+			"@open-archiver/backend/*": ["../../packages/backend/dist/*"]
+		}
+	},
+	"include": ["src/**/*.ts"],
+	"exclude": ["node_modules", "dist", "src/**/*.svelte", "src/ui.ts"]
+}
