@@ -6,6 +6,10 @@
 	import Footer from '$lib/components/custom/Footer.svelte';
 	import { getAlert } from '$lib/components/custom/alert/alert-state.svelte';
 	import Alerts from '$lib/components/custom/alert/Alerts.svelte';
+	import { registerPluginUI } from '$lib/stores/plugins.store';
+	import { pluginUIContributions } from '$lib/plugins';
+
+	registerPluginUI(pluginUIContributions);
 
 	let { data, children } = $props();
 

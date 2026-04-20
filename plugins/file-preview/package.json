@@ -1,0 +1,22 @@
+{
+	"name": "@open-archiver/plugin-file-preview",
+	"version": "0.1.0",
+	"description": "File preview plugin for OpenArchiver — inline preview of image and PDF attachments",
+	"main": "src/index.ts",
+	"types": "src/index.ts",
+	"exports": {
+		".": "./src/index.ts",
+		"./ui": "./src/ui.ts"
+	},
+	"peerDependencies": {
+		"@open-archiver/types": "workspace:*",
+		"@open-archiver/backend": "workspace:*",
+		"express": "^4.0.0"
+	},
+	"devDependencies": {
+		"@open-archiver/types": "workspace:*",
+		"@open-archiver/backend": "workspace:*",
+		"express": "^4.21.2",
+		"@types/express": "^5.0.0"
+	}
+}

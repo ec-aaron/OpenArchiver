@@ -33,17 +33,31 @@ import i18nextMiddleware from 'i18next-http-middleware';
 import path from 'path';
 import { logger } from '../config/logger';
 import { rateLimiter } from './middleware/rateLimiter';
+import { requireAuth } from './middleware/requireAuth';
 import { config } from '../config';
-import { OpenArchiverFeature } from '@open-archiver/types';
-// Define the "plugin" interface
+import {
+	OpenArchiverFeature,
+	type ArchiverPlugin,
+	type PluginContext,
+	type PluginCapability,
+} from '@open-archiver/types';
+// Define the legacy "module" interface (enterprise features)
 export interface ArchiverModule {
 	initialize: (app: Express, authService: AuthService) => Promise<void>;
 	name: OpenArchiverFeature;
 }
 
-export let authService: AuthService;
+export type PluginOrModule = ArchiverPlugin | ArchiverModule;
 
-export async function createServer(modules: ArchiverModule[] = []): Promise<Express> {
+function isArchiverPlugin(mod: PluginOrModule): mod is ArchiverPlugin {
+	return 'ui' in mod || !Object.values(OpenArchiverFeature).includes((mod as ArchiverModule).name);
+}
+
+export let authService: AuthService;
+/** Loaded plugins, accessible for frontend to read UI contributions */
+export let loadedPlugins: ArchiverPlugin[] = [];
+
+export async function createServer(modules: PluginOrModule[] = []): Promise<Express> {
 	// Load environment variables
 	dotenv.config();
 
@@ -155,11 +169,34 @@ export async function createServer(modules: ArchiverModule[] = []): Promise<Expr
 	app.use(`/${config.api.version}/integrity`, integrityRouter);
 	app.use(`/${config.api.version}/jobs`, jobsRouter);
 
-	// Load all provided extension modules
-	for (const module of modules) {
-		await module.initialize(app, authService);
-		logger.info(`🏢 Enterprise module loaded: ${module.name}`);
+	// Load all provided extension modules and plugins
+	loadedPlugins = [];
+	for (const mod of modules) {
+		if (isArchiverPlugin(mod)) {
+			const ctx: PluginContext = { app, authService, config };
+			await mod.initialize(ctx);
+			loadedPlugins.push(mod);
+			logger.info(`🔌 Plugin loaded: ${mod.name}`);
+		} else {
+			await mod.initialize(app, authService);
+			logger.info(`🏢 Enterprise module loaded: ${mod.name}`);
+		}
 	}
+
+	// Expose plugin capabilities to the frontend
+	app.get(`/${config.api.version}/plugins/capabilities`, requireAuth(authService), (_req, res) => {
+		const capabilities: PluginCapability[] = loadedPlugins
+			.filter((p) => p.ui)
+			.flatMap((p) =>
+				p.ui!.map((u) => ({
+					pluginName: p.name,
+					extensionPoint: u.extensionPoint,
+					config: u.config,
+				}))
+			);
+		res.json(capabilities);
+	});
+
 	app.get('/', (req, res) => {
 		res.send('Backend is running!!');
 	});

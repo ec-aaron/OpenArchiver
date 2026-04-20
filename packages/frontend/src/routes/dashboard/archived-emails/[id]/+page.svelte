@@ -4,6 +4,8 @@
 	import * as Card from '$lib/components/ui/card';
 	import EmailPreview from '$lib/components/custom/EmailPreview.svelte';
 	import EmailThread from '$lib/components/custom/EmailThread.svelte';
+	import ExtensionSlot from '$lib/components/extensions/ExtensionSlot.svelte';
+	import { pluginContributions } from '$lib/stores/plugins.store';
 	import { api } from '$lib/api.client';
 	import { browser } from '$app/environment';
 	import { formatBytes } from '$lib/utils';
@@ -294,18 +296,32 @@
 													attachment.sizeBytes
 												)})</span
 											>
-											<Button
-												variant="outline"
-												size="sm"
-												class="text-xs"
-												onclick={() =>
-													download(
-														attachment.storagePath,
-														attachment.filename
-													)}
-											>
-												{$t('app.archive.download')}
-											</Button>
+											<div class="flex gap-2">
+												<ExtensionSlot
+													point="attachment-actions"
+													plugins={$pluginContributions}
+													props={{
+														attachment,
+														onDownload: () =>
+															download(
+																attachment.storagePath,
+																attachment.filename
+															),
+													}}
+												/>
+												<Button
+													variant="outline"
+													size="sm"
+													class="text-xs"
+													onclick={() =>
+														download(
+															attachment.storagePath,
+															attachment.filename
+														)}
+												>
+													{$t('app.archive.download')}
+												</Button>
+											</div>
 										</li>
 									{/each}
 								</ul>
