@@ -523,12 +523,7 @@ export class IngestionService {
 					let attachmentRecord = existingAttachment;
 
 					if (!attachmentRecord) {
-						// If it's a new attachment, create a unique path and save it
-						const uniqueId = randomUUID().slice(0, 5);
-						const storagePath = `${config.storage.openArchiverFolderName}/${source.name.replaceAll(' ', '-')}-${source.id}/attachments/${uniqueId}-${attachment.filename}`;
-						await storage.put(storagePath, attachmentBuffer);
-
-						// Insert a new attachment record
+						// Insert a new attachment record using the storagePath already saved above
 						[attachmentRecord] = await db
 							.insert(attachmentsSchema)
 							.values({
