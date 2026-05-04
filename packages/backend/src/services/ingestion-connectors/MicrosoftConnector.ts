@@ -218,6 +218,20 @@ export class MicrosoftConnector implements IEmailConnector {
 				primaryEmail: this.authenticatedUserEmail,
 				displayName: this.authenticatedUserEmail, // Use email as display name
 			};
+
+			// Yield additional mailboxes (e.g., shared mailboxes)
+			if (this.credentials.additionalMailboxes?.length) {
+				for (const mailbox of this.credentials.additionalMailboxes) {
+					const email = mailbox.trim().toLowerCase();
+					if (!email) continue;
+					logger.info({ userEmail: email }, 'Adding additional mailbox (single-user mode)');
+					yield {
+						id: email,
+						primaryEmail: email,
+						displayName: email,
+					};
+				}
+			}
 		}
 	}
 

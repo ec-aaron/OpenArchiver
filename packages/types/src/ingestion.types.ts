@@ -74,6 +74,12 @@ export interface Microsoft365Credentials extends BaseIngestionCredentials {
 	 * Leave empty for organization-wide access.
 	 */
 	singleUserEmail?: string;
+	/**
+	 * Optional: Additional mailbox email addresses to archive (e.g., shared mailboxes).
+	 * These are archived alongside the primary singleUserEmail mailbox.
+	 * The Application Access Policy must grant access to each mailbox.
+	 */
+	additionalMailboxes?: string[];
 }
 
 export interface PSTImportCredentials extends BaseIngestionCredentials {

@@ -224,6 +224,8 @@
 				"tenant_id": "Directory (Tenant) ID",
 				"single_user_email": "User Email (Optional)",
 				"single_user_email_placeholder": "Required for single-user mode - e.g., user@example.com",
+				"additional_mailboxes": "Additional Mailboxes (Optional)",
+				"additional_mailboxes_placeholder": "Shared mailboxes to archive, one per line - e.g.,\nshared1@example.com\nshared2@example.com",
 				"host": "Host",
 				"port": "Port",
 				"username": "Username",

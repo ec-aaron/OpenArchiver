@@ -236,6 +236,23 @@
 				class="col-span-3"
 			/>
 		</div>
+		<div class="grid grid-cols-4 items-center gap-4">
+			<Label for="additionalMailboxes" class="text-left"
+				>{$t('app.components.ingestion_source_form.additional_mailboxes')}</Label
+			>
+			<Textarea
+				id="additionalMailboxes"
+				placeholder={$t('app.components.ingestion_source_form.additional_mailboxes_placeholder')}
+				value={formData.providerConfig.additionalMailboxes?.join('\n') ?? ''}
+				oninput={(e) => {
+					const val = e.currentTarget.value;
+					formData.providerConfig.additionalMailboxes = val
+						? val.split('\n').map((s) => s.trim()).filter(Boolean)
+						: [];
+				}}
+				class="col-span-3"
+			/>
+		</div>
 	{:else if formData.provider === 'generic_imap'}
 		<div class="grid grid-cols-4 items-center gap-4">
 			<Label for="host" class="text-left"
